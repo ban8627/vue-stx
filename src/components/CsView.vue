@@ -1,26 +1,25 @@
 <template>
-      <!-- 고객센터 -->
-    <section class="cs">
-      <div class="inner clearfix">
+  <section class="cs">
+        <div class="inner clearfix">
 
-        <a href="#" class="cs-faq">
-          <h3>FAQ</h3>
-          <p>
-            STX건설 고객님들을 위해 <br>
-            자주하시는 질문과 답변을 정리하였습니다.
-          </p>
-        </a>
+          <a href="#" class="cs-faq">
+            <h3>FAQ</h3>
+            <p>
+              STX건설 고객님들을 위해 <br>
+              자주하시는 질문과 답변을 정리하였습니다.
+            </p>
+          </a>
 
-        <a href="#" class="cs-qa">
-          <h3>고객문의</h3>
-          <p>
-            STX건설 고객상담은 고객만족 <br>
-            서비스를 위하여 최선을 다하고 있습니다.
-          </p>
-        </a>
+          <a href="#" class="cs-qa">
+            <h3>고객문의</h3>
+            <p>
+              STX건설 고객상담은 고객만족 <br>
+              서비스를 위하여 최선을 다하고 있습니다.
+            </p>
+          </a>
 
-      </div>
-    </section>
+        </div>
+      </section>
 </template>
 
 <script>
@@ -30,6 +29,7 @@ export default {
 </script>
 
 <style>
+
 /* 고객센터 */
 .cs {
   background: #f8f8f8;
@@ -63,4 +63,5 @@ export default {
 .cs p {
   font-weight: 300;
 }
+
 </style>

@@ -1,63 +1,15 @@
 <template>
-      <!-- 상단 -->
-    <header class="header">
+  <header class="header">
       <div class="inner">
-        <a href="#" class="logo" >stx건설</a>
-        <nav class="gnb">
+        <a href="#" class="logo">stx건설</a>
+        <nav class="gnb">     
           <ul class="depth1">
-            <li>
-              <a href="#">회사소개</a>
+            <li v-for="(item, index) in gnbData" :key="index">
+              <a :href="item.mainlink">{{item.maintxt}}</a>
               <ul class="depth2">
-                <li><a href="#">인사말</a></li>
-                <li><a href="#">STX건설</a></li>
-                <li><a href="#">기업문화</a></li>
-                <li><a href="#">STX건설연혁</a></li>
-                <li><a href="#">조직안내</a></li>
-                <li><a href="#">윤리경영</a></li>
-                <li><a href="#">안전·환경·품질경영</a></li>
-                <li><a href="#">찾아오시는길</a></li>
-                
-              </ul>
-            </li>
-            <li>
-              <a href="#">사업분야</a>
-              <ul class="depth2">
-                <li><a href="#">건축사업</a></li>
-                <li><a href="#">주택사업</a></li>
-                <li><a href="#">토목사업</a></li>
-                <li><a href="#">플랜트/공작기계사업</a></li>
-                <li><a href="#">해외사업</a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="#">사회공헌</a>
-              <ul class="depth2">
-                <li><a href="#">나눔의생각</a></li>
-                <li><a href="#">주요활동분야</a></li>
-                <li><a href="#">활동현황</a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="#">홍보센터</a>
-              <ul class="depth2">
-                <li><a href="#">홍보동영상</a></li>
-                <li><a href="#">홍보브로슈어</a></li>
-                <li><a href="#">STX건설뉴스</a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="#">고객지원</a>
-              <ul class="depth2">
-                <li><a href="#">자주묻는질문</a></li>
-                <li><a href="#">고객문의</a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="#">채용정보</a>
-              <ul class="depth2">
-                <li><a href="#">채용안내</a></li>
-                <li><a href="#">채용공고</a></li>
-                <li><a href="#">채용FAQ</a></li>
+                <li v-for="(subitem, subindex) in item.subdata" :key="subindex">
+                  <a :href="subitem.sublink">{{subitem.subtxt}}</a>
+                </li>
               </ul>
             </li>
           </ul>
@@ -72,11 +24,56 @@
 </template>
 
 <script>
-export default {
+import $ from 'jquery';
+import { computed, onUpdated} from 'vue';
 
+import { useStore } from 'vuex';
+
+export default {
+  setup() {
+    const store = useStore();
+    const gnbData = computed(()=>store.getters.getGnbData);
+    // vuex 의 stroe 의 action 을 요청한다.
+    store.dispatch('fetchGnb');
+    
+    // vue 에서 화면에 html 등록시 실행
+    onUpdated( () => { 
+       // .header를 저장한다.
+      let header = $('.header');
+      let gnb = $('.gnb');
+      // 펼쳐졌을 때의 높이값
+      let gnbMaxHeight = gnb.outerHeight();
+      // 닫혔을 때의 높이값
+      let gnbMinHeight = header.outerHeight();
+      // 기본 header 의 높이값 적용
+      header.css('height', gnbMinHeight);
+      gnb.mouseenter(function () {
+        header.css('height', gnbMaxHeight);
+      });
+      gnb.mouseleave(function () {
+        header.css('height', gnbMinHeight);
+      });
+      // 주메뉴 포커스 기능
+      let depth_1_Li = $('.depth1 > li');
+      $.each(depth_1_Li, function () {
+        $(this).mouseenter(function () {
+          // li 의 > a 를 찾는다.
+          $(this).find('>a').addClass('depth1-focus');
+        });
+        $(this).mouseleave(function () {
+          // li 의 > a 를 찾는다.
+          $(this).find('>a').removeClass('depth1-focus');
+        });
+      });
+
+    });
+    
+    return {
+      gnbData
+    }
+  }
 }
 </script>
-
 <style>
 /* 상단 */
 .header {
@@ -115,7 +112,7 @@ export default {
   top: 20px;
   width: 150px;
   height: 39px;
-  background: url('../assets/images/logo.png') no-repeat center;
+  background: url('@/assets/images/logo.png') no-repeat center;
   background-size: cover;
   font-size: 0;
 }

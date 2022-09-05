@@ -1,57 +1,74 @@
 <template>
-      <!-- 업무파트 -->
-    <section class="part">
-      <div class="inner">
+   <section class="part">
+        <div class="inner">
 
-        <h2 class="part-title">
-          STX Engineering & Construction Business
-        </h2>
+          <h2 class="part-title">
+            STX Engineering & Construction Business
+          </h2>
 
-        <p class="part-txt">
-          STX건설은 건문 역량 강화를 통해 건축, 주택, 토목, 플랜트 사업 영역에서 <br>
-          탁월한 성과를 인정받은 기업으로 자연과 기술의 공간에 인류의 가치를 추구합니다.
-        </p>
+          <p class="part-txt">
+            STX건설은 건문 역량 강화를 통해 건축, 주택, 토목, 플랜트 사업 영역에서 <br>
+            탁월한 성과를 인정받은 기업으로 자연과 기술의 공간에 인류의 가치를 추구합니다.
+          </p>
 
-        <ul class="part-list clearfix">
-          <li>
-            <a href="#">
-              <h3>건축사업</h3>
-            </a>
-          </li>
-          <li>
-            <a href="#">              
-              <h3>주택사업</h3>
-            </a>
-          </li>
-          <li>
-            <a href="#">              
-              <h3>토목사업</h3>
-            </a>
-          </li>
-          <li>
-            <a href="#">       
-              <h3>플랜트/공작기계사업</h3>
-            </a>
-          </li>
-          <li>
-            <a href="#">    
-              <h3>해외사업</h3>
-            </a>
-          </li>
-        </ul>
+          <ul class="part-list clearfix">
+            <li>
+              <a href="#">
+                <h3>건축사업</h3>
+              </a>
+            </li>
+            <li>
+              <a href="#">              
+                <h3>주택사업</h3>
+              </a>
+            </li>
+            <li>
+              <a href="#">              
+                <h3>토목사업</h3>
+              </a>
+            </li>
+            <li>
+              <a href="#">       
+                <h3>플랜트/공작기계사업</h3>
+              </a>
+            </li>
+            <li>
+              <a href="#">    
+                <h3>해외사업</h3>
+              </a>
+            </li>
+          </ul>
 
-      </div>
-    </section>
+        </div>
+      </section>
 </template>
 
 <script>
-export default {
+import $ from 'jquery';
+import {onMounted} from 'vue';
 
+export default {
+  setup() {
+    // html 을 출력시 실행
+    onMounted( () => {
+      // part 배경 배치
+      let partListLi = $('.part-list li');
+      let partListW = 1200 / partListLi.length;
+      $.each(partListLi, function (index) {
+        let tgX = partListW * index;
+        tgX = -1 * tgX;
+        $(this).css('background-position-x', tgX);
+      });
+      
+    });
+
+    return {      
+    }
+  }
 }
 </script>
 
 <style>
-/* 업무파트 */
 .part {}
 
 .part-title {
